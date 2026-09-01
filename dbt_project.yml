@@ -48,7 +48,7 @@ models:
       +schema: REFINED
 
     marts: #Data delivery layer
-      portfolio: #One specific data mart
+      stock-portfolio: #One specific data mart
         +materialized: table
         +schema: MART_PORTFOLIO
 
