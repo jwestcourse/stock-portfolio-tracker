@@ -1,0 +1,15 @@
+version: 2
+models:
+
+  - name: REF_POSITION_ABC_BANK
+    description: The positions we have in the ABC Bank stock portfolio
+    columns:
+      - name: unrealized_profit_amt
+        description: The unrealized profit on the stock position
+        tests:
+          - not_null
+      - name: unrealized_profit_pct
+        description: The unrealized profit percentage on the stock position
+        tests:
+          - not_null
+
