@@ -39,6 +39,21 @@ models:
   stock_portfolio_tracker:
     +materialized: view
 
-    refined: # Applies to all files under models/refined/
-      +materialized: table
+    staging: #Data storage layer
+      +materialized: view
+      +schema: STAGING
+
+    refined: #Refined data layer
+      +materialized: view
       +schema: REFINED
+
+    marts: #Data delivery layer
+      portfolio: #One specific data mart
+        +materialized: table
+        +schema: MART_PORTFOLIO
+
+snapshots:
+  stock_portfolio_tracker:
+    +target_schema: SNAPSHOTS
+
+    
