@@ -44,7 +44,7 @@ models:
       +schema: STAGING
 
     refined: #Refined data layer
-      +materialized: view
+      +materialized: table
       +schema: REFINED
 
     marts: #Data delivery layer
