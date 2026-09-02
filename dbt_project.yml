@@ -67,5 +67,14 @@ seeds:
         - "UPDATE {{ this }} SET LOAD_TS = '{{ run_started_at }}' WHERE LOAD_TS IS NULL"
       +column_types:
         LOAD_TS: TIMESTAMP
+    ABC_Bank_COUNTRY_INFO:
+      +post-hook:
+        - "UPDATE {{ this }} SET LOAD_TS = '{{ run_started_at }}' WHERE LOAD_TS IS NULL"
+      +column_types:
+        country_code_numeric: NUMBER(5,0)
+        region_code: NUMBER(5,0)
+        sub_region_code: NUMBER(5,0)
+        intermediate_region_code: NUMBER(5,0)
+        LOAD_TS: TIMESTAMP
 
 
