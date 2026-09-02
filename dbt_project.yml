@@ -56,4 +56,16 @@ snapshots:
   stock_portfolio_tracker:
     +target_schema: SNAPSHOTS
 
-    
+
+# Configuring Seeds
+# Full documentation: https://next.docs.getdbt.com/reference/seed-configs
+seeds:
+  +schema: seed_data
+  stock_portfolio_tracker:
+    ABC_Bank_SECURITY_INFO:
+      +post-hook:
+        - "UPDATE {{ this }} SET LOAD_TS = '{{ run_started_at }}' WHERE LOAD_TS IS NULL"
+      +column_types:
+        LOAD_TS: TIMESTAMP
+
+
