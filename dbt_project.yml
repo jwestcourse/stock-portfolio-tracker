@@ -76,5 +76,15 @@ seeds:
         sub_region_code: NUMBER(5,0)
         intermediate_region_code: NUMBER(5,0)
         LOAD_TS: TIMESTAMP
+    ABC_Bank_CURRENCY_INFO:
+      +post-hook:
+        - "UPDATE {{ this }} SET LOAD_TS = '{{ run_started_at }}' WHERE LOAD_TS IS NULL"
+      +column_types:
+        AlphabeticCode: TEXT
+        NumericCode: NUMBER(5,0)
+        DecimalDigits: NUMBER(5,0)
+        CurrencyName: TEXT
+        Locations: TEXT
+        LOAD_TS: TIMESTAMP
 
 
