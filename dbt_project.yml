@@ -86,5 +86,10 @@ seeds:
         CurrencyName: TEXT
         Locations: TEXT
         LOAD_TS: TIMESTAMP
+    ABC_Bank_EXCHANGE_INFO:
+      +post-hook:
+        - "UPDATE {{ this }} SET LOAD_TS = '{{ run_started_at }}' WHERE LOAD_TS IS NULL"
+      +column_types:
+        LOAD_TS: TIMESTAMP
 
 

@@ -6,3 +6,4 @@ sources:
       - name: ABC_Bank_SECURITY_INFO
       - name: ABC_Bank_COUNTRY_INFO
       - name: ABC_Bank_CURRENCY_INFO
+      - name: ABC_Bank_EXCHANGE_INFO
