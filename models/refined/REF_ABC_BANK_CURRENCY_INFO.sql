@@ -1,8 +1,10 @@
 WITH current_from_snapshot AS (
-    SELECT * EXCLUDE (DBT_SCD_ID, DBT_UPDATED_AT,
-                        DBT_VALID_FROM, DBT_VALID_TO)
-    FROM {{ ref('SNSH_ABC_BANK_CURRENCY_INFO') }}
-    WHERE DBT_VALID_TO IS NULL
+    {{
+        current_from_snapshot(
+            snsh_ref = ref('SNSH_ABC_BANK_CURRENCY_INFO'),
+            output_load_ts = false,
+        )
+    }}
 )
 
 SELECT * FROM current_from_snapshot
