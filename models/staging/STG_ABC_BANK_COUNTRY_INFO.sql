@@ -33,7 +33,7 @@ default_record AS (
         , -1 AS sub_region_code --NUMBER(5,0)
         , -1 AS intermediate_region_code --NUMBER(5,0)
         , '2020-01-01' AS LOAD_TS_UTC
-        , 'Missing' AS RECORD_SOURCE
+        , 'System.DefaultKey' AS RECORD_SOURCE
 ),
 
 with_default_record AS (

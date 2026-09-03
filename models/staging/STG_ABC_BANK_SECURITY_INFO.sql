@@ -23,7 +23,7 @@ default_record AS (
         , '-1' AS COUNTRY_CODE
         , '-1' AS EXCHANGE_CODE
         , '2020-01-01' AS LOAD_TS_UTC
-        , 'Missing' AS RECORD_SOURCE
+        , 'System.DefaultKey' AS RECORD_SOURCE
 ),
 
 with_default_record AS (

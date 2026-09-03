@@ -12,4 +12,11 @@ models:
         description: The unrealized profit percentage on the stock position
         tests:
           - not_null
+      - name: SECURITY_CODE
+        description: The code of the stock/security in the position
+        tests:
+          - relationships:
+              arguments: 
+                to: ref('REF_ABC_BANK_SECURITY_INFO')
+                field: SECURITY_CODE
 

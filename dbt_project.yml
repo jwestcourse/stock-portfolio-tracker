@@ -93,3 +93,10 @@ seeds:
         LOAD_TS: TIMESTAMP
 
 
+tests:
+  stock_portfolio_tracker:
+    +enabled: true
+    +severity: warn
+
+
+    

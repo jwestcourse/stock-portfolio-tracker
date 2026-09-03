@@ -14,6 +14,27 @@ WITH src_data As (
         , 'SOURCE_DATA.ABC_BANK_POSITION' AS RECORD_SOURCE
     FROM {{ source('abc_bank', 'ABC_BANK_POSITION') }}
 ),
+
+default_record AS (
+    SELECT
+        'Missing' AS ACCOUNT_CODE --TEXT
+        , 'Missing' AS SECURITY_CODE --TEXT
+        , 'Missing' AS SECURITY_NAME --TEXT
+        , 'Missing' AS EXCHANGE_CODE --TEXT
+        , '2020-01-01' AS REPORT_DATE
+        , -1 AS QUANTITY --NUMBER(5,0)
+        , -1 AS COST_BASE --NUMBER(5,0)
+        , -1 AS POSITION_VALUE --NUMBER(5,0)
+        , 'Missing' AS CURRENCY_CODE --TEXT
+        , 'System.DefaultKey' AS RECORD_SOURCE
+),
+
+with_default_record AS (
+    SELECT * FROM src_data
+    UNION ALL
+    SELECT * FROM default_record
+),
+
 hashed as (
     SELECT
         {{ dbt_utils.generate_surrogate_key([
@@ -26,6 +47,6 @@ hashed as (
         }} AS POSITION_HDIFF
         , *
         , '{{ run_started_at }}' as LOAD_TS_UTC
-    FROM src_data
+    FROM with_default_record
 )
 SELECT * FROM hashed
