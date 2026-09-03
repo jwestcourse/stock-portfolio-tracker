@@ -7,6 +7,10 @@ sources:
       - name: ABC_BANK_POSITION
         description: The landing table holding the data imported from the CSV extracted by ABC Bank
         columns:
+          - name: CONCAT_WS('-', ACCOUNTID, SYMBOL) #pseudo-column to test the compound key
+            tests:
+              - not_null
+              - unique
           - name: ACCOUNTID
             description: The unique identifier for the account at ABC Bank
             tests:
@@ -14,7 +18,6 @@ sources:
           - name: SYMBOL
             description: The symbol of the security for the ABC Bank
             tests:
-              - unique
               - not_null
           - name: DESCRIPTION
             description: The name of the security at the ABC Bank
@@ -46,3 +49,9 @@ sources:
             description: The currency for the monetary amounts of the position
             tests:
               - not_null
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                combination_of_columns:
+                  - ACCOUNTID
+                  - SYMBOL

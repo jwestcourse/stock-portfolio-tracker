@@ -21,7 +21,7 @@ default_record AS (
         , 'Missing' AS CurrencyName --TEXT
         , 'Missing' AS Locations --TEXT
         , '2020-01-01' AS LOAD_TS_UTC
-        , 'Missing' AS RECORD_SOURCE
+        , 'System.DefaultKey' AS RECORD_SOURCE
 ),
 
 with_default_record AS (
