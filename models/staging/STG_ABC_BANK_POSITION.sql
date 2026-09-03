@@ -6,7 +6,7 @@ WITH src_data As (
         , SYMBOL AS SECURITY_CODE -- TEXT
         , DESCRIPTION AS SECURITY_NAME -- TEXT
         , EXCHANGE AS EXCHANGE_CODE -- TEXT
-        , REPORT_DATE AS REPORT_DATE -- DATE
+        , {{ convert_year('REPORT_DATE') }} AS REPORT_DATE -- DATE
         , QUANTITY AS QUANTITY -- NUMBER
         , COST_BASE AS COST_BASE -- NUMBER
         , POSITION_VALUE AS POSITION_VALUE -- NUMBER
@@ -16,10 +16,14 @@ WITH src_data As (
 ),
 hashed as (
     SELECT
-        CONCAT_WS('|', ACCOUNT_CODE, SECURITY_CODE) AS POSITION_HKEY
-        , CONCAT_WS('|', ACCOUNT_CODE, SECURITY_CODE, SECURITY_NAME
-                    , EXCHANGE_CODE, REPORT_DATE, QUANTITY, COST_BASE
-                    , POSITION_VALUE, CURRENCY_CODE) AS POSITION_HDIFF
+        {{ dbt_utils.generate_surrogate_key([
+            'ACCOUNT_CODE', 'SECURITY_CODE'])
+        }} AS POSITION_HKEY
+        , {{ dbt_utils.generate_surrogate_key([
+            'ACCOUNT_CODE', 'SECURITY_CODE', 'SECURITY_NAME'
+            , 'EXCHANGE_CODE', 'REPORT_DATE', 'QUANTITY', 'COST_BASE'
+            , 'POSITION_VALUE', 'CURRENCY_CODE'])
+        }} AS POSITION_HDIFF
         , *
         , '{{ run_started_at }}' as LOAD_TS_UTC
     FROM src_data

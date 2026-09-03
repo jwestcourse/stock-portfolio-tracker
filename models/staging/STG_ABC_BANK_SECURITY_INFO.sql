@@ -34,9 +34,13 @@ with_default_record AS (
 
 hashed AS (
     SELECT
-        concat_ws('|', SECURITY_CODE) AS SECURITY_HKEY
-        , concat_ws('|', SECURITY_CODE, SECURITY_NAME, SECTOR_NAME,
-                         INDUSTRY_NAME, COUNTRY_CODE, EXCHANGE_CODE ) AS SECURITY_HDIFF
+        {{ dbt_utils.generate_surrogate_key([
+            'SECURITY_CODE' ])
+        }} AS SECURITY_HKEY
+        , {{ dbt_utils.generate_surrogate_key([
+            'SECURITY_CODE', 'SECURITY_NAME', 'SECTOR_NAME',
+            'INDUSTRY_NAME', 'COUNTRY_CODE', 'EXCHANGE_CODE'])
+        }} AS SECURITY_HDIFF
         , * EXCLUDE LOAD_TS
         , LOAD_TS AS LOAD_TS_UTC
     FROM with_default_record

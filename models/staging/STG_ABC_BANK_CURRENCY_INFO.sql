@@ -32,9 +32,13 @@ with_default_record AS (
 
 hashed AS (
     SELECT
-        concat_ws('|', AlphabeticCode) AS CURRENCY_HKEY
-        , concat_ws('|', AlphabeticCode, NumericCode, DecimalDigits,
-                        CurrencyName, Locations) AS CURRENCY_HDIFF
+        {{ dbt_utils.generate_surrogate_key([
+            'AlphabeticCode' ])
+        }} AS CURRENCY_HKEY
+        , {{ dbt_utils.generate_surrogate_key([
+            'AlphabeticCode', 'NumericCode', 'DecimalDigits',
+            'CurrencyName', 'Locations' ])
+        }} AS CURRENCY_HDIFF
         , * EXCLUDE LOAD_TS
         , LOAD_TS AS LOAD_TS_UTC
     FROM with_default_record

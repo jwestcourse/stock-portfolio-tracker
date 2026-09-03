@@ -44,10 +44,14 @@ with_default_record AS (
 
 hashed AS (
     SELECT
-        concat_ws('|', country_code_2_letter) AS COUNTRY_HKEY
-        , concat_ws('|', country_code_2_letter, country_name, country_code_3_letter, country_code_numeric,
-                        iso_3166_2, region, sub_region, intermediate_region, 
-                        region_code, sub_region_code, intermediate_region_code) AS COUNTRY_HDIFF
+        {{ dbt_utils.generate_surrogate_key([
+            'country_code_2_letter' ])
+        }} AS COUNTRY_HKEY
+        , {{ dbt_utils.generate_surrogate_key([
+            'country_code_2_letter', 'country_name', 'country_code_3_letter', 'country_code_numeric',
+            'iso_3166_2', 'region', 'sub_region', 'intermediate_region', 
+            'region_code', 'sub_region_code', 'intermediate_region_code' ])
+        }} AS COUNTRY_HDIFF
         , * EXCLUDE LOAD_TS
         , LOAD_TS AS LOAD_TS_UTC
     FROM with_default_record
