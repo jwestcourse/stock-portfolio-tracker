@@ -1,5 +1,7 @@
 {% snapshot SNSH_ABC_BANK_POSITION %}
 
+{{ config(enabled=false) }}
+
 {{
     config(
         unique_key='POSITION_HKEY',

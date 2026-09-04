@@ -1,5 +1,7 @@
 {% snapshot SNSH_ABC_BANK_SECURITY_INFO %}
 
+{{ config(enabled=false) }}
+
 {{
     config(
         unique_key='SECURITY_HKEY',
